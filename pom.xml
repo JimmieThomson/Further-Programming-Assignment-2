@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.assignment2furtherprogramming/com.example.assignment2furtherprogramming.HelloApplication
+                                com.example.assignment2furtherprogramming/com.example.assignment2furtherprogramming.createGui
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

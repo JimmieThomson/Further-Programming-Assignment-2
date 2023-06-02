@@ -29,6 +29,15 @@ public class User implements Serializable {
     public String getPassword() {
         return password;
     }
+    public String getFirstName(){return firstName;}
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getStudentNumber() {
+        return studentNumber;
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;

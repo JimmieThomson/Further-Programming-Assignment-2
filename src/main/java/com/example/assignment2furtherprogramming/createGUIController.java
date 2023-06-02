@@ -1,15 +1,15 @@
 package com.example.assignment2furtherprogramming;
 
 import com.example.assignment2furtherprogramming.classes.User;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
 
-public class createGUIController {
+public class createGUIController extends createGui{
 
     @FXML
     private Text Error;
@@ -44,13 +44,16 @@ public class createGUIController {
     }
 
     @FXML
-    public void Login() {
+    public void Login() throws IOException {
         Error.setVisible(false);
         updateUsers();
         for (User user : users) {
             if(username.getText().equalsIgnoreCase(user.getUsername()) && password.getText().equals(user.getPassword())){
                 Error.setText("Information Correct!");
                 Error.setVisible(true);
+
+                //Starting the profile stage
+                showProfile(user);
                 return;
             }
         }

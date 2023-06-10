@@ -2,26 +2,38 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="372.0" prefWidth="418.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.assignment2furtherprogramming.ProfileController">
+<AnchorPane prefHeight="404.0" prefWidth="474.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.assignment2furtherprogramming.ProfileController">
    <children>
-      <VBox prefHeight="372.0" prefWidth="418.0">
+      <VBox prefHeight="404.0" prefWidth="474.0">
          <children>
-            <TabPane prefHeight="400.0" prefWidth="434.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane prefHeight="405.0" prefWidth="470.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="Welcome">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="549.0">
                            <children>
-                              <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" wrappingWidth="63.21630859375" />
-                              <Label fx:id="nameField" layoutX="84.0" layoutY="13.0" prefHeight="19.0" prefWidth="104.0" text="Label" />
+                              <Text layoutX="26.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome">
+                                 <font>
+                                    <Font name="Avenir Book" size="36.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="InfoWelcome" layoutX="24.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Info">
+                                 <font>
+                                    <Font name="Bodoni 72 Book" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Button layoutX="14.0" layoutY="309.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -31,16 +43,55 @@
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="282.0" prefWidth="400.0">
                            <children>
                               <TextField fx:id="Password" layoutX="22.0" layoutY="90.0" promptText="Password" />
-                              <TextField fx:id="StudentID" layoutX="22.0" layoutY="149.0" promptText="Student Number" />
+                              <TextField fx:id="StudentID" editable="false" layoutX="22.0" layoutY="149.0" promptText="Student Number" />
                               <TextField fx:id="FirstName" layoutX="22.0" layoutY="205.0" promptText="First Name" />
                               <TextField fx:id="LastName" layoutX="22.0" layoutY="261.0" promptText="Last Name" />
-                              <Button fx:id="SaveButton" layoutX="22.0" layoutY="308.0" mnemonicParsing="false" text="Save" />
+                              <Button fx:id="SaveButton" layoutX="22.0" layoutY="308.0" mnemonicParsing="false" onAction="#saveDetails" text="Save" />
                               <Text fill="#808080" layoutX="22.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cannot change" />
                               <TextField fx:id="Username" layoutX="22.0" layoutY="43.0" promptText="Username" />
+                              <Text layoutX="22.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
+                              <Text layoutX="26.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+                              <Text layoutX="22.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" />
+                              <Text layoutX="22.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" />
+                              <Text fx:id="Errors" fill="#00ff0d" layoutX="22.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Errors" visible="false" wrappingWidth="357.21630859375" />
                            </children>
                         </AnchorPane>
                   </content>
                 </Tab>
+                  <Tab text="Enrolment">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="453.0">
+                           <children>
+                              <ListView fx:id="CoursesList" layoutX="14.0" layoutY="14.0" prefHeight="347.0" prefWidth="374.0" />
+                              <Button fx:id="EnrollmentShowButton" layoutX="398.0" layoutY="14.0" mnemonicParsing="false" onAction="#extractEnrol" text="Enrolled" />
+                              <Button fx:id="ShowClassesButton" layoutX="399.0" layoutY="50.0" mnemonicParsing="false" onAction="#extractClasses" text="Classes" />
+                              <Button fx:id="EnrolButton" layoutX="407.0" layoutY="335.0" mnemonicParsing="false" onAction="#addEnrolSelected" text="Enrol" />
+                              <Button fx:id="RemoveCourses" layoutX="398.0" layoutY="188.0" mnemonicParsing="false" onAction="#removeEnrolSelected" text="Remove" visible="false" />
+                              <TextField fx:id="searchBox" layoutX="393.0" layoutY="251.0" prefHeight="26.0" prefWidth="74.0" />
+                              <Button fx:id="searchButton" layoutX="403.0" layoutY="282.0" mnemonicParsing="false" onAction="#SearchClasses" text="Search" />
+                              <Button fx:id="downloadButton" layoutX="392.0" layoutY="101.0" mnemonicParsing="false" onAction="#downloadCourses" text="Download" visible="false" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="TimeTable">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="TableClasses" layoutX="10.0" layoutY="10.0" prefHeight="356.0" prefWidth="453.0">
+                                <columns>
+                                  <TableColumn fx:id="mondayColumn" prefWidth="83.9700927734375" text="Monday" />
+                                  <TableColumn fx:id="tuesdayColumn" prefWidth="79.76183319091797" text="Tuesday" />
+                                    <TableColumn fx:id="wednesdayColumn" prefWidth="85.73818969726562" text="Wednesday" />
+                                    <TableColumn fx:id="thursdayColumn" prefWidth="88.29176330566406" text="Thursday" />
+                                    <TableColumn fx:id="fridayColumn" prefWidth="114.58349609375" text="Friday" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="Test" layoutX="-13.0" layoutY="-3.0" mnemonicParsing="false" onAction="#setUpTableView" text="Button" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
               </tabs>
             </TabPane>
          </children>

@@ -34,7 +34,7 @@ public class extractClasses {
         //https://www.javatpoint.com/how-to-read-csv-file-in-java
         //Lines 22 to 33 are not my code, the above html link is where this code is from
         try {
-            Scanner sc = new Scanner(new File("src/course.csv"));
+            Scanner sc = new Scanner(new File("/Users/jamesthomson/IdeaProjects/Assignment-2-Further-Programming/src/main/java/com/example/assignment2furtherprogramming/course.csv"));
             sc.useDelimiter(",|\r\n");   //sets the delimiter pattern
 
             while (sc.hasNext())  //returns a boolean value

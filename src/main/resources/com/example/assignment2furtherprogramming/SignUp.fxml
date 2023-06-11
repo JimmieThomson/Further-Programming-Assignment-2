@@ -6,19 +6,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="421.0" prefWidth="399.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.assignment2furtherprogramming.SignUpController">
-   <children>
-      <TextField fx:id="username" layoutX="39.0" layoutY="48.0" prefHeight="37.0" prefWidth="321.0" />
-      <PasswordField fx:id="password" layoutX="39.0" layoutY="114.0" prefHeight="37.0" prefWidth="321.0" />
-      <TextField fx:id="studentID" layoutX="39.0" layoutY="182.0" prefHeight="37.0" prefWidth="321.0" />
-      <TextField fx:id="fName" layoutX="39.0" layoutY="245.0" prefHeight="37.0" prefWidth="321.0" />
-      <TextField fx:id="Lname" layoutX="39.0" layoutY="304.0" prefHeight="37.0" prefWidth="321.0" />
-      <Text layoutX="171.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
-      <Text layoutX="172.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-      <Text layoutX="170.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student ID" />
-      <Text layoutX="170.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" />
-      <Text layoutX="169.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" />
-      <Button layoutX="168.0" onAction="#Signup" layoutY="356.0" mnemonicParsing="false" text="Sign Up" />
-      <Text fx:id="Error" fill="RED" layoutX="187.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" />
-   </children>
+<AnchorPane prefHeight="421.0" prefWidth="399.0" style="-fx-background-color: grey;" styleClass="backimage"
+            stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.assignment2furtherprogramming.SignUpController">
+   <TextField fx:id="username" layoutX="39.0" layoutY="48.0" prefHeight="37.0" prefWidth="321.0"/>
+   <PasswordField fx:id="password" layoutX="39.0" layoutY="114.0" prefHeight="37.0" prefWidth="321.0"/>
+   <TextField fx:id="studentID" layoutX="39.0" layoutY="182.0" prefHeight="37.0" prefWidth="321.0"/>
+   <TextField fx:id="fName" layoutX="39.0" layoutY="245.0" prefHeight="37.0" prefWidth="321.0"/>
+   <TextField fx:id="Lname" layoutX="39.0" layoutY="304.0" prefHeight="37.0" prefWidth="321.0"/>
+   <Text fill="WHITE" layoutX="171.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username"/>
+   <Text fill="WHITE" layoutX="172.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password"/>
+   <Text fill="WHITE" layoutX="170.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student ID"/>
+   <Text fill="WHITE" layoutX="170.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name"/>
+   <Text fill="WHITE" layoutX="169.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name"/>
+   <Button layoutX="39.0" layoutY="357.0" mnemonicParsing="false" onAction="#Signup" text="Sign Up"/>
+   <Text fx:id="Error" fill="RED" layoutX="187.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text"
+         visible="false"/>
+   <Button layoutX="323.0" layoutY="357.0" onAction="#closeEvent" mnemonicParsing="false" text="Exit"/>
 </AnchorPane>

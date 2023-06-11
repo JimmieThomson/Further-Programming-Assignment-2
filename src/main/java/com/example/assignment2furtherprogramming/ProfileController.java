@@ -2,11 +2,11 @@ package com.example.assignment2furtherprogramming;
 
 import com.example.assignment2furtherprogramming.classes.User;
 import com.example.assignment2furtherprogramming.classes.extractClasses;
-import com.example.assignment2furtherprogramming.classes.timeTable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
@@ -15,7 +15,8 @@ import java.io.*;
 import java.util.*;
 
 public class ProfileController{
-    private final timeTable classtimeTable;
+    @FXML
+    private GridPane timeTables;
     @FXML
     private Text Errors;
     @FXML
@@ -24,18 +25,6 @@ public class ProfileController{
     private Button downloadButton;
     @FXML
     private Button searchButton;
-    @FXML
-    private TableView<timeTable> TableClasses;
-    @FXML
-    private TableColumn<timeTable, String> mondayColumn;
-    @FXML
-    private TableColumn<timeTable, String> tuesdayColumn;
-    @FXML
-    private TableColumn<timeTable, String> wednesdayColumn;
-    @FXML
-    private TableColumn<timeTable, String> thursdayColumn;
-    @FXML
-    private TableColumn<timeTable, String> fridayColumn;
     @FXML
     private TextField searchBox;
     @FXML
@@ -74,7 +63,6 @@ public class ProfileController{
         extractClasses csv = new extractClasses();
         csvContent = csv.getCsvContent();
         csvContent.remove("Course name");
-        this.classtimeTable = new timeTable();
     }
 
     //This is the passing function seen in LoginController when starting this stage
@@ -82,6 +70,7 @@ public class ProfileController{
     public void Start(User currentUser){
         this.currentUser = currentUser;
         startProfile();
+        Errors.setVisible(false);
     }
 
     @FXML
@@ -99,7 +88,9 @@ public class ProfileController{
         //Extracts the hash map and places every one in the list here
         for(Map.Entry<String, String> items: csvContent.entrySet()){
             String[] slicedItems = items.getValue().split(",");
-            classes.add(String.format("%s  %s %s %s %s %s %s", items.getKey(), slicedItems[0],slicedItems[1],slicedItems[2],slicedItems[3],slicedItems[4],slicedItems[5]));
+            if(!slicedItems[0].equalsIgnoreCase("N/A")) {
+                classes.add(String.format("%s  %s %s %s %s %s %s", items.getKey(), slicedItems[0], slicedItems[1], slicedItems[2], slicedItems[3], slicedItems[4], slicedItems[5]));
+            }
         }
         CoursesList.getItems().addAll(classes);
     }
@@ -171,6 +162,7 @@ public class ProfileController{
                 enrolledClasses.add(String.format("%s  %s %s %s %s %s %s", items.getKey(), slicedItems[0], slicedItems[1], slicedItems[2], slicedItems[3], slicedItems[4], slicedItems[5]));
             }
             CoursesList.getItems().addAll(enrolledClasses);
+            setUpTableView();
         }catch(NullPointerException ignored){
         }
     }
@@ -189,6 +181,7 @@ public class ProfileController{
             if (hashIndex == CoursesList.getSelectionModel().getSelectedIndex()){
                 currentUser.addCourse(course, csvContent.get(course));
                 updateBin(currentUser.getUsername());
+                setUpTableView();
                 break;
             }
             hashIndex++;
@@ -205,6 +198,7 @@ public class ProfileController{
         //Welcome Screen
         InfoWelcome.setText(String.format("%s %s: %s", FirstName.getText(), LastName.getText(), StudentID.getText()));
         extractClasses();
+        setUpTableView();
     }
 
     @FXML
@@ -267,6 +261,8 @@ public class ProfileController{
         }
     }
 
+    //Suppresses the user read warning
+    @SuppressWarnings("unchecked")
     //function used to update the users from the bin into readable computer code that is stores in users array list
     private void updateUsers() {
         try {
@@ -313,12 +309,41 @@ public class ProfileController{
             hashIndex++;
         }
     }
-
-    @FXML
-    //Not in use yet
+    //Sets up the timetable per class and updates each change in the enrollment
     private void setUpTableView(){
-        classtimeTable.clearAll();
-        classtimeTable.updateTimes(currentUser.getEnrolledCourses());
-        //Ignore for now please come back!
+        //Clears the grid
+        timeTables.getChildren().clear();
+        //Each class that is in the enrollment wil be looped and added here
+        for (Map.Entry<String, String> course : currentUser.getEnrolledCourses().entrySet()) {
+            //Formatting the data into doubles and integers for start time and duration
+            String[] details = course.getValue().split(",");
+            String[] time = details[4].split(":");
+            int timeStarts = Integer.parseInt(time[0]) - 8;
+            double durationDouble = Double.parseDouble(details[5]);
+            int duration = (int) Math.round(durationDouble - 0.5);
+
+            //Using labels to show the class name
+            Label label = new Label();
+            label.setText(course.getKey());
+            //This is for the css class, it puts the padding greater if the class is longer than 2 hours
+            if(duration >= 2) {
+                label.getStyleClass().add("gridPanecolourDouble");
+            }else{
+                label.getStyleClass().add("gridPanecolourSingle");
+            }
+
+            //Assigns a grid pane depending on the day and time - 8
+            if(details[3].equalsIgnoreCase("monday")){
+                timeTables.add(label, 0, timeStarts, 1, duration);
+            }else if(details[3].equalsIgnoreCase("tuesday")){
+                timeTables.add(label, 1, timeStarts, 1, duration);
+            }else if(details[3].equalsIgnoreCase("wednesday")){
+                timeTables.add(label, 2, timeStarts, 1, duration);
+            }else if(details[3].equalsIgnoreCase("thursday")){
+                timeTables.add(label, 3, timeStarts, 1, duration);
+            }else if(details[3].equalsIgnoreCase("friday")){
+                timeTables.add(label, 4, timeStarts, 1, duration);
+            }
+        }
     }
 }

@@ -1,0 +1,14 @@
+.backimage{
+    -fx-background-image: url("classes/RMITLOGO.png");
+    -fx-background-size: cover;
+}
+.gridPanecolourSingle{
+    -fx-background-color: grey;
+    -fx-background-size: fill;
+    -fx-padding: 25px 0 25px 0;
+}
+.gridPanecolourDouble{
+    -fx-background-color: grey;
+    -fx-background-size: fill;
+    -fx-padding: 50px 0 50px 0;
+}

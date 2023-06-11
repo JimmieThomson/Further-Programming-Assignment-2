@@ -7,12 +7,10 @@ import javafx.scene.Node;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SignUpController {
     @FXML
@@ -31,10 +29,12 @@ public class SignUpController {
     private User newUser;
 
     private Window eventStage;
-    public SignUpController(){
+
+    public SignUpController() {
         this.users = new ArrayList<>();
     }
 
+    //Checks for if the user's username does not conflict with any in user.bin
     @FXML
     public void Signup(ActionEvent event) {
         //Checks to see if the user has typed anything within the boxes
@@ -47,40 +47,49 @@ public class SignUpController {
                 this.newUser = new User(username.getText(), password.getText(), studentID.getText(), fName.getText(), Lname.getText());
                 addUser();
             } else {
-                Error.setVisible(true); Error.setText("Student ID or Username already exist!");
+                Error.setVisible(true);
+                Error.setText("Student ID or Username already exist!");
             }
         } else {
             Error.setText("Username or Password left empty");
             Error.setVisible(true);
         }
     }
+
+    //This is a boolean function which returns if the username or the studentID matches any other in the users file
     public Boolean checkInfoValid(String username, String studentID) {
         updateUsers();
-        try{
-            if(!users.isEmpty()) {
+        try {
+            if (!users.isEmpty()) {
+                //Looping through every user it knows
                 for (User user : users) {
-                    if(user.getUsername().equalsIgnoreCase(username) || user.getStudentNumber().equalsIgnoreCase(studentID)){
+                    //True if it matches
+                    if (user.getUsername().equalsIgnoreCase(username) || user.getStudentNumber().equalsIgnoreCase(studentID)) {
                         return false;
                     }
                 }
             }
-        }catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             return false;
         }
         return true;
     }
 
+    //Suppresses the user read warning
+    @SuppressWarnings("unchecked")
+    //Puts all users in the bin file into readable code
     public void updateUsers() {
         try {
             ObjectInputStream users = new ObjectInputStream(new FileInputStream("src/main/java/com/example/assignment2furtherprogramming/users.bin"));
             this.users = (ArrayList<User>) users.readObject();
             users.close();
         } catch (IOException | ClassNotFoundException e) {
-            System.err.printf("%s:\t%s\n", e , "updateUsers()");
+            System.err.printf("%s:\t%s\n", e, "updateUsers()");
         }
     }
 
-    public void addUser(){
+    //Adding and user to the user.bin file
+    public void addUser() {
         updateUsers();
         this.users.add(this.newUser);
 
@@ -88,13 +97,16 @@ public class SignUpController {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/main/java/com/example/assignment2furtherprogramming/users.bin"));
             out.writeObject(this.users);
             out.close();
-            close();
-        } catch(IOException e){
-            System.err.printf("%s:\t%s\n", e , "addUser()");
+            eventStage.hide();
+        } catch (IOException e) {
+            System.err.printf("%s:\t%s\n", e, "addUser()");
         }
     }
 
-    public void close(){
-        eventStage.hide();
+    //If the button is clicked it closes the stage completely
+    public void closeEvent(ActionEvent close){
+        Node source = (Node) close.getSource();
+        Window stage = source.getScene().getWindow();
+        stage.hide();
     }
 }
